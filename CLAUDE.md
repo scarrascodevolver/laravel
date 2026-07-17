@@ -22,6 +22,12 @@ Repository Pattern, Policies, Events/Listeners, Jobs/Queues, testing, etc.
 - Stack de vistas: **Blade + Tailwind**.
 - Base de datos de desarrollo: SQLite (simplicidad, sin depender de un servidor
   MySQL local) salvo que se decida lo contrario.
+- **Guía de aprendizaje**: existe `GUIA-APRENDIZAJE.md` en la raíz del repo,
+  un cuaderno de apuntes con analogías + explicación técnica + código de
+  cada concepto que vamos viendo. A diferencia de este CLAUDE.md (reglas
+  para Claude), esa guía es material de estudio para el usuario. Hay que
+  actualizarla cada vez que se cubre un concepto nuevo relevante, no solo
+  cuando el usuario lo pida explícitamente.
 
 ## Estado actual
 - [x] PHP 8.3.6, Composer 2.10.2 instalados en el entorno (Ubuntu 24.04 WSL2).
