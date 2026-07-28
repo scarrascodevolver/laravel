@@ -60,6 +60,52 @@ protected $fillable = ['nombre', 'descripcion', 'precio', 'stock', 'categoria'];
 **Pendiente:** todavía no lo agregamos al modelo `Producto` — hay que
 definir primero las columnas reales en la migración.
 
+### Rutas tipo *resource*
+
+`Route::resource('productos', ProductoController::class);` crea de una sola
+línea las 7 rutas del CRUD (index, create, store, show, edit, update,
+destroy), en vez de escribirlas una por una con `Route::get`, `Route::post`,
+etc. Por eso si vas a usar `Route::resource`, tu controlador necesita los 7
+métodos — de ahí que pidamos `-r` al generarlo.
+
+### ¿Cuándo pido `-m`, `-c`, `-r`? — checklist con ejemplos
+
+| Situación | ¿Qué pedir? |
+|---|---|
+| La tabla no existe todavía | `-m` (migración) |
+| La tabla ya existe, solo necesitas el modelo PHP | sin `-m` |
+| Vas a manejar peticiones web para esa entidad | `-c` (controlador) |
+| Solo se usa internamente, sin rutas | sin `-c` |
+| El controlador va a tener el CRUD completo | `-r` |
+| Solo 1-2 acciones custom, no las 7 | sin `-r` |
+
+**Checklist mental antes de correr un comando `artisan`:** ¿qué pieza real
+necesito?, ¿el nombre está bien (singular, PascalCase)?, ¿voy a usar rutas
+resource?
+
+**Checklist después:** ¿qué archivos se crearon (mira el output)?, ¿está
+vacío o con contenido real?, ¿cuál es la dependencia siguiente? (ej. la
+migración hay que llenarla antes de correr `migrate`, porque después de
+migrar, cambiar columnas requiere una migración nueva, no editar la vieja).
+
+### El mesero que cocina en la mesa — controlador vs lógica de negocio
+
+Un controlador es el **mesero**: recibe el pedido (la petición HTTP), lo
+lleva a quien corresponda, trae la respuesta. La lógica de negocio /
+consultas complejas deberían vivir en la "cocina" (una clase `Service`,
+Fase 3), no en el salón.
+
+Si el controlador se llena de SQL crudo o reglas de negocio complejas
+directo en sus métodos, es como si el mesero sacara una parrilla y
+cocinara al lado de la mesa — funciona, pero no se puede reusar, ni
+cambiar de proveedor fácil, ni testear por separado. Eso es un **"fat
+controller"**.
+
+Por ahora (Fase 1) está bien poner Eloquent directo en los métodos del
+controlador — es el paso de aprender el CRUD básico. Eloquent ya es más
+seguro que SQL crudo. La Fase 3 es mover esa lógica a un `Service` cuando
+el controlador empiece a crecer.
+
 ---
 
 ## Glosario rápido
